@@ -85,7 +85,7 @@ export const updateConversation = async (req, res) => {
 export const deleteConversation = async (req, res) => {
   console.log("inside deleteConversation function");
   try {
-    const id = req.body.id;
+    const id = req.body.conversationId;
     const response = await Conversation.findOneAndDelete({ _id: id });
     if (response) {
       res.status(201).send("deleted");
