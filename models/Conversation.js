@@ -14,6 +14,10 @@ const conversationSchema = Schema(
       type: String,
       default: "New Chat",
     },
+    from_pdf: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

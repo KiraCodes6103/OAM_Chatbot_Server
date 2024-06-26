@@ -1,13 +1,13 @@
 import multer from "multer";
+import path from "path";
 const storage = multer.diskStorage({
-  destination: "./uploadedFiles/",
-  filename: function (req, file, cb) {
-    // console.log(req);
-    // const version = req.body.version;
-    // const title = req.body.title;
-    // const name = "Version-" + version + title;
-    // const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.originalname);
+  destination: (req, file, cb) => {
+    cb(null, './uploadedFiles/');
+  },
+  filename: (req, file, cb) => {
+    const { adminID, version } = req.body;
+    const uniqueSuffix = `${version}-${adminID}${path.extname(file.originalname)}`;
+    cb(null, uniqueSuffix);
   },
 });
 

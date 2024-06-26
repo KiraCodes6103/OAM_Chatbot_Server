@@ -3,14 +3,14 @@ import { PdfReader } from "pdfreader";
 export const getContext = (filePath) => {
   return new Promise((resolve, reject) => {
     let context = "";
-    // let arr = [];
+    const arr = [];
     new PdfReader().parseFileItems(filePath, (err, item) => {
       if (err) {
-        console.error("error:", err);
+        // console.error("error:", err);
         reject(err);
       } else if (!item) {
         console.warn("end of file");
-        resolve(context);
+        resolve(arr);
       } else if (item.text) {
         let paragraph = item.text
           .trim()
@@ -18,9 +18,14 @@ export const getContext = (filePath) => {
           .replace(/\s+/g, " ")
           .replace(/\n\s*\n/g, " ")
           .trim();
-          // console.log("para => " + paragraph);
-        context += paragraph + " ";
-        
+        // console.log("para => " + paragraph);
+
+        if (paragraph == "") {
+          arr.push(context);
+          context = "";
+        } else {
+          context += paragraph + " ";
+        }
       }
     });
   });
